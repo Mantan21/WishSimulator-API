@@ -1,13 +1,6 @@
 import { json } from '@sveltejs/kit';
 import ytdl from 'ytdl-core';
 
-const isOriginValid = (/** @type {string | URL | null} */ origin) => {
-	if (!origin) return false;
-	const validDomains = /^(.*)?\.?(wishsimulator\.app|localhost)(:[0-9]+)?/;
-	const { hostname } = new URL(origin);
-	return validDomains.test(hostname);
-};
-
 /** @type {import('./$types').RequestHandler} */
 export function GET() {
 	return json({ message: 'nothing to show' }, { status: 400 });
@@ -16,12 +9,6 @@ export function GET() {
 /** @type {import('./$types').RequestHandler} */
 export async function POST({ request, fetch }) {
 	try {
-		const origin = request.headers.get('origin');
-		if (!isOriginValid(origin)) {
-			const message = `You're not allowed to do this action`;
-			return json({ message }, { status: 403 });
-		}
-
 		const { videoID } = await request.json();
 		const vID = videoID?.replace(/[^A-Za-z0-9_\\-]/g, '');
 		if (!vID) return json({ message: 'please input video ID' }, { status: 400 });
