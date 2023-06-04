@@ -27,5 +27,7 @@
 		"vite": "^4.3.0"
 	},
 	"type": "module",
-	"dependencies": {}
+	"dependencies": {
+		"ytdl-core": "https://github.com/khlevon/node-ytdl-core.git#v4.11.4-patch.1"
+	}
 }
