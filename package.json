@@ -29,6 +29,6 @@
 	"type": "module",
 	"dependencies": {
 		"@vercel/analytics": "^1.0.1",
-		"ytdl-core": "https://github.com/khlevon/node-ytdl-core.git#v4.11.4-patch.1"
+		"ytdl-core": "https://github.com/fent/node-ytdl-core.git"
 	}
 }
