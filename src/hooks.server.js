@@ -1,5 +1,5 @@
 const checkOrigin = (/** @type {string | URL | null} */ origin) => {
-	// If Emptu Origin
+	// If Empty Origin
 	if (!origin) return false;
 
 	const validDomains = /^(.*)?\.?(wishsimulator\.app|localhost)(:[0-9]+)?/;
