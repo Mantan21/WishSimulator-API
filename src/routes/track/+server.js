@@ -72,5 +72,5 @@ const ytdlLib = async (/** @type {string} */ vID) => {
 		images
 	};
 
-	return result;
+	return { ...result };
 };

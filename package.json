@@ -29,6 +29,6 @@
 	"type": "module",
 	"dependencies": {
 		"@vercel/analytics": "^1.0.1",
-		"ytdl-core": "https://github.com/fent/node-ytdl-core.git"
+		"ytdl-core": "https://github.com/khlevon/node-ytdl-core.git#fix/youtube-issue-2"
 	}
 }
