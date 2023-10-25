@@ -18,7 +18,7 @@ export async function handle({ event, resolve }) {
 	const origin = event.request.headers.get('origin');
 
 	// Apply CORS header for API routes
-	const allowedPath = ['/track', '/patron'];
+	const allowedPath = ['/track', '/patron', '/storage'];
 	const checkPath = allowedPath.map((pt) => event.url.pathname.startsWith(pt));
 	if (checkPath.includes(true)) {
 		const cors = checkOrigin(origin);
