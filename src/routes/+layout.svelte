@@ -6,9 +6,5 @@
 </script>
 
 <main>
-	Nothing to Show
-	<a href="/auth/login">login</a>
-</main>
-<!-- <main>
 	<slot />
-</main> -->
+</main>
