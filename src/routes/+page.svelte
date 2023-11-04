@@ -1,7 +1,3 @@
-<script>
-	import Counter from './Counter.svelte';
-</script>
-
 <svelte:head>
 	<title>Home</title>
 	<meta name="description" content="Svelte demo app" />
@@ -9,8 +5,6 @@
 
 <section>
 	<h1>WishSimulator API</h1>
-
-	<Counter />
 </section>
 
 <style>
