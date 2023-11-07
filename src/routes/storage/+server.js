@@ -35,7 +35,7 @@ export async function GET({ request }) {
 
 		// Check if ids are provided but invalid
 		if (idParam && ids.length < 1) {
-			return json({ message: 'Invalid ID', success: false }, { status: 400 });
+			return json({ message: 'Invalid ID', success: false });
 		}
 
 		const path = pathTo(app);
