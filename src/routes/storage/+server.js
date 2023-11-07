@@ -21,22 +21,35 @@ export async function GET({ request }) {
 	try {
 		const url = new URL(request.url);
 		const app = url.searchParams.get('app') || 'genshin';
-		const id = url.searchParams.get('id');
+		const idParam = url.searchParams.get('id') || '';
 
 		if (!checkApp(app)) {
 			return json({ message: 'Invalid App Storage', success: false }, { status: 400 });
 		}
 
-		// Find a specific ID
-		if (id) {
-			const data = await gitrows.get(pathTo(app), { id });
-			if (data.length < 1) return json({ message: 'Not Found', success: false });
-			return json({ message: 'ok', success: true, data: data[0] });
+		// Filter Valid ID only
+		const ids = idParam.split(',').filter((id) => {
+			const trimmed = parseInt(id.trim());
+			return trimmed && !isNaN(trimmed);
+		});
+
+		// Check if ids are provided but invalid
+		if (idParam && ids.length < 1) {
+			return json({ message: 'Invalid ID', success: false }, { status: 400 });
+		}
+
+		const path = pathTo(app);
+		const data = (await gitrows.get(path)) || [];
+
+		// show multiple ids
+		if (ids.length > 0) {
+			const idNum = ids.map((id) => parseInt(id));
+			const filtered = data.filter(({ id = 0 }) => idNum.includes(id));
+			if (filtered.length < 1) return json({ message: 'Not Found', success: false });
+			return json({ message: 'ok', success: true, data: filtered });
 		}
 
 		// Show All
-		const path = pathTo(app);
-		const data = (await gitrows.get(path)) || [];
 		return json({ message: 'ok', success: true, data });
 	} catch (e) {
 		return json(
@@ -54,7 +67,7 @@ export async function POST({ request }) {
 			return json({ message: 'Invalid App Storage', success: false }, { status: 400 });
 		}
 
-		if (action === 'put') return addOrUpdate(data, app, id);
+		if (action === 'put') return addOrUpdate(app, id, data);
 		if (action === 'delete') return deleteData(app, id);
 
 		return json(
@@ -71,15 +84,15 @@ export async function POST({ request }) {
 
 // Add or Update Data
 const addOrUpdate = async (
-	/** @type {object} */ data = {},
 	/** @type {string} */ app,
-	/** @type {number} */ id
+	/** @type {number} */ id,
+	/** @type {object} */ data = {}
 ) => {
 	try {
 		const checkID = !id ? [] : await gitrows.get(pathTo(app), { id });
 
 		// Create new Object if no id
-		if (!id || checkID.length < 1) {
+		if (checkID.length < 1) {
 			const rng = randomNumber(111111111, 999999999);
 			const dataToStore = [{ id: rng, ...data }];
 			const { message, code } = await gitrows.put(pathTo(app), dataToStore);
@@ -102,10 +115,10 @@ const addOrUpdate = async (
 const deleteData = async (/** @type {string} */ app, /** @type {number} */ id) => {
 	if (!id) return json({ message: 'Invalid ID' }, { status: 400 });
 
-	const checkID = await gitrows.get(pathTo(app), { id });
-	if (checkID.length < 1) return json({ message: 'ok', success: true }, { status: 201 });
+	// const checkID = await gitrows.get(pathTo(app), { id });
+	// if (checkID.length < 1) return json({ message: 'ok', success: true }, { status: 201 });
 
 	// Remove Item
 	const { message } = await gitrows.delete(pathTo(app), { id });
-	return json({ message: message.description, success: true }, { status: 201 });
+	return json({ message: message?.description, success: true }, { status: 201 });
 };
