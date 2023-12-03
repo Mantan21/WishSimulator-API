@@ -67,6 +67,7 @@ export async function POST({ request }) {
 			return json({ message: 'Invalid App Storage', success: false }, { status: 400 });
 		}
 
+		if (action === 'block') return blockID(app, id);
 		if (action === 'put') return addOrUpdate(app, id, data);
 		if (action === 'delete') return deleteData(app, id);
 
@@ -121,4 +122,14 @@ const deleteData = async (/** @type {string} */ app, /** @type {number} */ id) =
 	// Remove Item
 	const { message } = await gitrows.delete(pathTo(app), { id });
 	return json({ message: message?.description, success: true }, { status: 201 });
+};
+
+const blockID = async (/** @type {string} */ app, /** @type {any} */ id) => {
+	const data = !id ? [] : await gitrows.get(pathTo(app), { id });
+
+	if (data.length > 0) {
+		const filter = { id };
+		await gitrows.update(pathTo(app), { ...data[0], blocked: true }, filter);
+	}
+	return json({ message: 'Banner Blocked', success: true }, { status: 201 });
 };
