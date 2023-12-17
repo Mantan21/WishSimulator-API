@@ -1,8 +1,10 @@
+import { allowedHost } from '$lib/hostlist';
+
 const checkOrigin = (/** @type {string | URL | null} */ origin) => {
-	// If Empty Origin
 	if (!origin) return false;
 
-	const validDomains = /^(.*)?\.?(wishsimulator\.app|localhost)(:[0-9]+)?/;
+	const hostlist = allowedHost().join('|');
+	const validDomains = new RegExp(`^(.*)?\\.?(${hostlist})(:[0-9]+)?`);
 	const { hostname, port } = new URL(origin);
 	if (!validDomains.test(hostname)) return false;
 
