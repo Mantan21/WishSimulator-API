@@ -1,0 +1,12 @@
+[images]
+  remote_images = ["https://ibb.co/.*", "https://i.ibb.co/.*"] # You can add more image's host
+
+[[redirects]]
+  from = "/cb/*"
+  to = "/.netlify/images?fm=webp&url=https://i.ibb.co/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/transform/*"
+  to = "/.netlify/images?fm=webp&url=:splat"
+  status = 200

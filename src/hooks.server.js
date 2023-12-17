@@ -43,9 +43,14 @@ export async function handle({ event, resolve }) {
 				}
 			});
 		}
-
-		response.headers.append('Access-Control-Allow-Origin', '*');
 	}
 
+	// Cors for JS path
+	if (event.url.pathname.startsWith('/js')) {
+		response.headers.append('Access-Control-Allow-Headers', '*');
+		response.headers.append('Access-Control-Allow-Methods', 'GET');
+	}
+
+	response.headers.append('Access-Control-Allow-Origin', '*');
 	return response;
 }
