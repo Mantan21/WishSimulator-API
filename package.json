@@ -29,7 +29,8 @@
 	"type": "module",
 	"dependencies": {
 		"@vercel/analytics": "^1.0.1",
-		"gitrows": "^0.9.0",
+		"gitrows": "https://github.com/Mantan21/gitrows",
+		"googleapis": "^128.0.0",
 		"patreon": "^0.4.1",
 		"ytdl-core": "https://github.com/khlevon/node-ytdl-core.git#fix/youtube-issue-2"
 	}
