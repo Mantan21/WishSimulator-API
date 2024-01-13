@@ -39,7 +39,8 @@ export async function GET({ request }) {
 		}
 
 		const path = pathTo(app);
-		const data = (await gitrows.get(path)) || [];
+		const dataObj = (await gitrows.get(path)) || [];
+		const data = dataObj.filter((/** @type {any} */ d) => d !== null);
 
 		// show multiple ids
 		if (ids.length > 0) {
