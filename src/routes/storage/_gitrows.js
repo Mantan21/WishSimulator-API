@@ -10,5 +10,18 @@ const options = {
 };
 
 const gitrows = new Gitrows(options);
-
 export default gitrows;
+
+export const randomNumber = (/** @type {number} */ min, /** @type {number} */ max) => {
+	return Math.floor(Math.random() * (max - min + 1) + min);
+};
+
+export const pathTo = (/** @type {string} */ app) => {
+	const appname = app?.trim().toLocaleLowerCase();
+	return `@github/Mantan21/wishsim-db/${appname}.json`;
+};
+
+export const checkApp = (/** @type {string} */ app) => {
+	const appname = app?.trim().toLocaleLowerCase();
+	return ['hsr', 'genshin'].includes(appname);
+};

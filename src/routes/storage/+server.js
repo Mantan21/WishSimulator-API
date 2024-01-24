@@ -1,19 +1,6 @@
 import { json } from '@sveltejs/kit';
-import gitrows from './_gitrows';
-
-const randomNumber = (/** @type {number} */ min, /** @type {number} */ max) => {
-	return Math.floor(Math.random() * (max - min + 1) + min);
-};
-
-const pathTo = (/** @type {string} */ app) => {
-	const appname = app?.trim().toLocaleLowerCase();
-	return `@github/Mantan21/wishsim-db/${appname}.json`;
-};
-
-const checkApp = (/** @type {string} */ app) => {
-	const appname = app?.trim().toLocaleLowerCase();
-	return ['hsr', 'genshin'].includes(appname);
-};
+import { removeOldData } from './_removeOldData';
+import gitrows, { checkApp, pathTo, randomNumber } from './_gitrows';
 
 // Read Data Storage
 /** @type {import('./$types').RequestHandler} */
@@ -40,7 +27,7 @@ export async function GET({ request }) {
 
 		const path = pathTo(app);
 		const dataObj = (await gitrows.get(path)) || [];
-		const data = dataObj.filter((/** @type {any} */ d) => d !== null);
+		const data = await removeOldData(app, dataObj);
 
 		// show multiple ids
 		if (ids.length > 0) {
@@ -84,12 +71,13 @@ export async function POST({ request }) {
 	}
 }
 
-// Add or Update Data
-const addOrUpdate = async (
-	/** @type {string} */ app,
-	/** @type {number} */ id,
-	/** @type {object} */ data = {}
-) => {
+/**
+ * Add or Update Data
+ * @param {string} app - App to update (Genshin or HSR)
+ * @param {number} id - ID of the Object.
+ * @param {object} data - Banner Data.
+ */
+const addOrUpdate = async (app, id, data = {}) => {
 	try {
 		const checkID = !id ? [] : await gitrows.get(pathTo(app), { id });
 
@@ -113,8 +101,12 @@ const addOrUpdate = async (
 	}
 };
 
-// Delete Data
-const deleteData = async (/** @type {string} */ app, /** @type {number} */ id) => {
+/**
+ * Delete Data
+ * @param {string} app - App to update (Genshin or HSR)
+ * @param {number} id - ID of the Object.
+ */
+const deleteData = async (app, id) => {
 	if (!id) return json({ message: 'Invalid ID' }, { status: 400 });
 
 	// const checkID = await gitrows.get(pathTo(app), { id });
@@ -125,7 +117,12 @@ const deleteData = async (/** @type {string} */ app, /** @type {number} */ id) =
 	return json({ message: message?.description, success: true }, { status: 201 });
 };
 
-const blockID = async (/** @type {string} */ app, /** @type {any} */ id) => {
+/**
+ * Block Banner
+ * @param {string} app - App to update (Genshin or HSR)
+ * @param {number} id - ID of the Object.
+ */
+const blockID = async (app, id) => {
 	const data = !id ? [] : await gitrows.get(pathTo(app), { id });
 
 	if (data.length > 0) {
