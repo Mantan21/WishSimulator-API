@@ -9,12 +9,12 @@ export function GET() {
 /** @type {import('./$types').RequestHandler} */
 export async function POST({ request, fetch }) {
 	try {
-		const { videoID } = await request.json();
+		const { videoID, type = 'audio' } = await request.json();
 		const vID = videoID?.replace(/[^A-Za-z0-9_\\-]/g, '');
 		if (!vID) return json({ message: 'please input video ID' }, { status: 400 });
 
 		// const videoResult = await mp3Youtube(vID, fetch);
-		const videoResult = await ytdlLib(vID);
+		const videoResult = type === 'video' ? await vidLib(vID) : await audioLib(vID);
 
 		return json({ message: 'ok', ...videoResult }, { status: 200 });
 	} catch (e) {
@@ -49,7 +49,7 @@ export async function POST({ request, fetch }) {
 // 	return { download, images, title };
 // };
 
-const ytdlLib = async (/** @type {string} */ vID) => {
+const audioLib = async (/** @type {string} */ vID) => {
 	const formats = { mime: '' };
 	const ytInfo = await ytdl.getInfo(vID);
 	ytInfo.formats
@@ -62,7 +62,6 @@ const ytdlLib = async (/** @type {string} */ vID) => {
 
 	// @ts-ignore
 	const images = ytInfo.player_response.videoDetails.thumbnail.thumbnails;
-
 	const result = {
 		download: ytdl.chooseFormat(ytInfo.formats, { filter: 'audioonly' }).url,
 		formats,
@@ -71,6 +70,30 @@ const ytdlLib = async (/** @type {string} */ vID) => {
 		description: ytInfo.videoDetails.description,
 		images
 	};
+	return result;
+};
 
-	return { ...result };
+const vidLib = async (/** @type {string} */ vID) => {
+	const formats = { mime: '' };
+	const ytInfo = await ytdl.getInfo(vID);
+	ytInfo.formats
+		.filter(({ mimeType, hasAudio, qualityLabel }) => {
+			return mimeType?.startsWith('video') && !hasAudio && qualityLabel === '360p';
+		})
+		.forEach(({ mimeType, url }) => {
+			const mime = mimeType?.split(';')[0];
+			// @ts-ignore
+			formats[mime] = url;
+		});
+
+	// @ts-ignore
+	const images = ytInfo.player_response.videoDetails.thumbnail.thumbnails;
+	const result = {
+		formats,
+		author: ytInfo.videoDetails.author.name,
+		title: ytInfo.videoDetails.title,
+		description: ytInfo.videoDetails.description,
+		images
+	};
+	return result;
 };
