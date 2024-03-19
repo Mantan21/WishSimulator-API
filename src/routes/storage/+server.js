@@ -1,6 +1,6 @@
 import { json } from '@sveltejs/kit';
 import { removeOldData } from './_removeOldData';
-import gitrows, { checkApp, pathTo, randomNumber } from './_gitrows';
+import gitrows, { chooseDB, pathTo, randomNumber, readAll, updateSummary } from './_gitrows';
 
 // Read Data Storage
 /** @type {import('./$types').RequestHandler} */
@@ -9,8 +9,10 @@ export async function GET({ request }) {
 		const url = new URL(request.url);
 		const app = url.searchParams.get('app') || 'genshin';
 		const idParam = url.searchParams.get('id') || '';
+		const appname = app?.trim().toLocaleLowerCase();
+		const validApp = ['hsr', 'genshin'].includes(appname);
 
-		if (!checkApp(app)) {
+		if (!validApp) {
 			return json({ message: 'Invalid App Storage', success: false }, { status: 400 });
 		}
 
@@ -25,8 +27,7 @@ export async function GET({ request }) {
 			return json({ message: 'Invalid ID', success: false });
 		}
 
-		const path = pathTo(app);
-		const dataObj = (await gitrows.get(path)) || [];
+		const dataObj = await readAll(app);
 		const data = await removeOldData(app, dataObj);
 
 		// show multiple ids
@@ -51,13 +52,15 @@ export async function GET({ request }) {
 export async function POST({ request }) {
 	try {
 		const { app, action, data, id } = await request.json();
-		if (!checkApp(app)) {
+		const appname = app?.trim().toLocaleLowerCase();
+		const validApp = ['hsr', 'genshin'].includes(appname);
+		if (!validApp) {
 			return json({ message: 'Invalid App Storage', success: false }, { status: 400 });
 		}
 
-		if (action === 'block') return blockID(app, id);
+		if (action === 'block') return blockID(app, id, data.db);
 		if (action === 'put') return addOrUpdate(app, id, data);
-		if (action === 'delete') return deleteData(app, id);
+		if (action === 'delete') return deleteData(app, id, data.db);
 
 		return json(
 			{ message: 'Forbidden Action', success: false },
@@ -78,21 +81,32 @@ export async function POST({ request }) {
  * @param {object} data - Banner Data.
  */
 const addOrUpdate = async (app, id, data = {}) => {
-	try {
-		const checkID = !id ? [] : await gitrows.get(pathTo(app), { id });
+	const check = async (k = '') => {
+		// @ts-ignore
+		const db = await gitrows.get(pathTo(app, data.db), { id });
+		if (k === 'length') return db.length < 1;
+		return db[0];
+	};
 
-		// Create new Object if no id
-		if (checkID.length < 1) {
+	try {
+		const isNew = !id || !('db' in data) || (await check('length'));
+		if (isNew) {
+			const { dbID, length } = await chooseDB(app);
 			const rng = randomNumber(111111111, 999999999);
-			const dataToStore = [{ id: rng, ...data }];
-			const { message, code } = await gitrows.put(pathTo(app), dataToStore);
-			return json({ message: message.description, id: rng, success: true }, { status: code });
+			const dataToStore = [{ id: rng, ...data, db: dbID }];
+			const { message, code } = await gitrows.put(pathTo(app, dbID), dataToStore);
+			await updateSummary(app, { dbID, length: length + 1 });
+			return json(
+				{ message: message.description, id: rng, db: dbID, success: true },
+				{ status: code }
+			);
 		}
 
 		// Update current data
 		const filter = { id };
-		const { message, code } = await gitrows.update(pathTo(app), data, filter);
-		return json({ message: message.description, success: true, id }, { status: code });
+		const { db } = data;
+		const { message, code } = await gitrows.update(pathTo(app, db), data, filter);
+		return json({ message: message.description, success: true, id, db }, { status: code });
 	} catch (e) {
 		return json(
 			{ message: 'Failed to Update Data', success: false },
@@ -105,15 +119,15 @@ const addOrUpdate = async (app, id, data = {}) => {
  * Delete Data
  * @param {string} app - App to update (Genshin or HSR)
  * @param {number} id - ID of the Object.
+ * @param {number} db - Database ID
  */
-const deleteData = async (app, id) => {
-	if (!id) return json({ message: 'Invalid ID' }, { status: 400 });
-
-	// const checkID = await gitrows.get(pathTo(app), { id });
-	// if (checkID.length < 1) return json({ message: 'ok', success: true }, { status: 201 });
+const deleteData = async (app, id, db) => {
+	if (!id || !db) return json({ message: 'Invalid ID' }, { status: 400 });
 
 	// Remove Item
-	const { message } = await gitrows.delete(pathTo(app), { id });
+	const { message } = await gitrows.delete(pathTo(app, db), { id });
+	const summary = await gitrows.get(pathTo(app, 'summary'), {}, 'pull');
+	updateSummary(app, { dbID: db, length: summary[0][db] - 1 });
 	return json({ message: message?.description, success: true }, { status: 201 });
 };
 
@@ -121,13 +135,14 @@ const deleteData = async (app, id) => {
  * Block Banner
  * @param {string} app - App to update (Genshin or HSR)
  * @param {number} id - ID of the Object.
+ * @param {number} db - Database ID
  */
-const blockID = async (app, id) => {
-	const data = !id ? [] : await gitrows.get(pathTo(app), { id });
+const blockID = async (app, id, db) => {
+	const data = !id || !db ? [] : await gitrows.get(pathTo(app, db), { id });
 
 	if (data.length > 0) {
 		const filter = { id };
-		await gitrows.update(pathTo(app), { ...data[0], blocked: true }, filter);
+		await gitrows.update(pathTo(app, db), { ...data[0], blocked: true }, filter);
 	}
 	return json({ message: 'Banner Blocked', success: true }, { status: 201 });
 };
