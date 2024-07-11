@@ -20,9 +20,9 @@ export async function handle({ event, resolve }) {
 	const origin = event.request.headers.get('origin');
 
 	// Apply CORS header for API routes
-	const allowedPath = ['/track', '/patron', '/storage'];
+	const allowedPath = ['/track', '/patron', '/storage', '/gcsb'];
 	const checkPath = allowedPath.map((pt) => event.url.pathname.startsWith(pt));
-	if (checkPath.includes(true)) {
+	if (checkPath.includes(true) && !/localhost/.test(event.request.url)) {
 		const cors = checkOrigin(origin);
 		if (!cors) {
 			const jsonResponse = JSON.stringify({ message: `You're not allowed to do this action` });
