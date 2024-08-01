@@ -1,5 +1,5 @@
 import { json } from '@sveltejs/kit';
-import ytdl from 'ytdl-core';
+import ytdl from '@distube/ytdl-core';
 
 /** @type {import('./$types').RequestHandler} */
 export function GET() {
