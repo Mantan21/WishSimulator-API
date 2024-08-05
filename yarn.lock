@@ -2,16 +2,17 @@
 # yarn lockfile v1
 
 
-"@distube/ytdl-core@https://github.com/distubejs/ytdl-core":
-  version "4.13.7"
-  resolved "https://github.com/distubejs/ytdl-core#0ccc87dce6baaaa14c3cb3366a94b1ce7a15ce22"
+"@distube/ytdl-core@^4.14.1":
+  version "4.14.1"
+  resolved "https://registry.yarnpkg.com/@distube/ytdl-core/-/ytdl-core-4.14.1.tgz#4cdd412e3fdf8f5a77f2ec6c790ecd861ab0c973"
+  integrity sha512-ymtw6IZyyUAzE+9Nbnhxa7PcFkPI+5OF9ckJZtqnI7gHlEH41jew6Z/im7mOAhmmiy6ppYXoAL0GhJIGRSGR1g==
   dependencies:
     http-cookie-agent "^6.0.5"
     m3u8stream "^0.8.6"
     miniget "^4.2.3"
     sax "^1.4.1"
     tough-cookie "^4.1.4"
-    undici "^6.19.2"
+    undici five
 
 "@esbuild/android-arm64@0.17.19":
   version "0.17.19"
@@ -154,6 +155,11 @@
   version "8.41.0"
   resolved "https://registry.yarnpkg.com/@eslint/js/-/js-8.41.0.tgz#080321c3b68253522f7646b55b577dd99d2950b3"
   integrity sha512-LxcyMGxwmTh2lY9FwHPGWOHmYFCZvbrFCBZL4FzSSsxsRPuhrYUg/49/0KDfW8tnIEaEHtfmn6+NPN+1DqaNmA==
+
+"@fastify/busboy@^2.0.0":
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/@fastify/busboy/-/busboy-2.1.1.tgz#b9da6a878a371829a0502c9b6c1c143ef6663f4d"
+  integrity sha512-vBZP4NlzfOlerQTnba4aqZoMhE/a9HY7HRqoOPaETQcSQuWEIyZMHGfVu6w9wGtGK5fED5qRs2DteVCjOH60sA==
 
 "@fontsource/fira-mono@^4.5.10":
   version "4.5.10"
@@ -1710,10 +1716,12 @@ typescript@^5.0.0, typescript@^5.0.3:
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.0.4.tgz#b217fd20119bd61a94d4011274e0ab369058da3b"
   integrity sha512-cW9T5W9xY37cc+jfEnaUvX91foxtHkza3Nw3wkoF4sSlKn0MONdkdEndig/qPBWXNkmplh3NzayQzCiHM4/hqw==
 
-undici@^6.19.2:
-  version "6.19.5"
-  resolved "https://registry.yarnpkg.com/undici/-/undici-6.19.5.tgz#5829101361b583b53206e81579f4df71c56d6be8"
-  integrity sha512-LryC15SWzqQsREHIOUybavaIHF5IoL0dJ9aWWxL/PgT1KfqAW5225FZpDUFlt9xiDMS2/S7DOKhFWA7RLksWdg==
+undici@five:
+  version "5.28.4"
+  resolved "https://registry.yarnpkg.com/undici/-/undici-5.28.4.tgz#6b280408edb6a1a604a9b20340f45b422e373068"
+  integrity sha512-72RFADWFqKmUb2hmmvNODKL3p9hcB6Gt2DOQMis1SEBaV6a4MH8soBvzg+95CYhCKPFedut2JY9bMfrDl9D23g==
+  dependencies:
+    "@fastify/busboy" "^2.0.0"
 
 undici@~5.22.0:
   version "5.22.1"
