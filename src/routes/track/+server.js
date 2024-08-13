@@ -1,5 +1,6 @@
 import { json } from '@sveltejs/kit';
 import ytdl from '@distube/ytdl-core';
+import { cookies } from './cookies';
 
 /** @type {import('./$types').RequestHandler} */
 export function GET() {
@@ -49,9 +50,11 @@ export async function POST({ request, fetch }) {
 // 	return { download, images, title };
 // };
 
+const agent = ytdl.createAgent(cookies);
+
 const audioLib = async (/** @type {string} */ vID) => {
 	const formats = { mime: '' };
-	const ytInfo = await ytdl.getInfo(vID);
+	const ytInfo = await ytdl.getInfo(vID, { agent });
 	ytInfo.formats
 		.filter((file) => file.mimeType?.startsWith('audio'))
 		.forEach((file) => {
@@ -75,7 +78,7 @@ const audioLib = async (/** @type {string} */ vID) => {
 
 const vidLib = async (/** @type {string} */ vID) => {
 	const formats = { mime: '' };
-	const ytInfo = await ytdl.getInfo(vID);
+	const ytInfo = await ytdl.getInfo(vID, { agent });
 	ytInfo.formats
 		.filter(({ mimeType, hasAudio, qualityLabel }) => {
 			return mimeType?.startsWith('video') && !hasAudio && qualityLabel === '360p';
