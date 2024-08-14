@@ -1,6 +1,7 @@
 import { json } from '@sveltejs/kit';
 import ytdl from '@distube/ytdl-core';
 import { cookies } from './cookies';
+import { myProxy } from './proxy';
 
 /** @type {import('./$types').RequestHandler} */
 export function GET() {
@@ -15,7 +16,7 @@ export async function POST({ request, fetch }) {
 		if (!vID) return json({ message: 'please input video ID' }, { status: 400 });
 
 		// const videoResult = await mp3Youtube(vID, fetch);
-		const videoResult = type === 'video' ? await vidLib(vID) : await audioLib(vID);
+		const videoResult = await proccessYt(vID, type);
 
 		return json({ message: 'ok', ...videoResult }, { status: 200 });
 	} catch (e) {
@@ -50,11 +51,17 @@ export async function POST({ request, fetch }) {
 // 	return { download, images, title };
 // };
 
-const agent = ytdl.createAgent(cookies);
-
-const audioLib = async (/** @type {string} */ vID) => {
-	const formats = { mime: '' };
+const proccessYt = async (vID, type) => {
+	const agent = ytdl.createProxyAgent({ uri: myProxy }, cookies);
 	const ytInfo = await ytdl.getInfo(vID, { agent });
+	const ytfn = type === 'video' ? vidLib : audioLib;
+	const result = await ytfn(ytInfo);
+	return result;
+};
+
+const audioLib = async (ytInfo = {}) => {
+	const formats = { mime: '' };
+
 	ytInfo.formats
 		.filter((file) => file.mimeType?.startsWith('audio'))
 		.forEach((file) => {
@@ -76,9 +83,8 @@ const audioLib = async (/** @type {string} */ vID) => {
 	return result;
 };
 
-const vidLib = async (/** @type {string} */ vID) => {
+const vidLib = async (ytInfo = {}) => {
 	const formats = { mime: '' };
-	const ytInfo = await ytdl.getInfo(vID, { agent });
 	ytInfo.formats
 		.filter(({ mimeType, hasAudio, qualityLabel }) => {
 			return mimeType?.startsWith('video') && !hasAudio && qualityLabel === '360p';
