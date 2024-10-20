@@ -1,7 +1,7 @@
 export const cookies = [
 	{
 		domain: '.youtube.com',
-		expirationDate: 1758134036.882299,
+		expirationDate: 1764006073,
 		hostOnly: false,
 		httpOnly: false,
 		name: '__Secure-1PAPISID',
@@ -10,12 +10,12 @@ export const cookies = [
 		secure: true,
 		session: false,
 		storeId: '1',
-		value: 'f_qI2g3VbwU13rl4/Ahy52_CdAJrrWkEMm',
+		value: 'nkbkgzeVbOFLlkqx/A3G-if1K3TPtwsuT7',
 		id: 1
 	},
 	{
 		domain: '.youtube.com',
-		expirationDate: 1758134036.88243,
+		expirationDate: 1764006073,
 		hostOnly: false,
 		httpOnly: true,
 		name: '__Secure-1PSID',
@@ -25,12 +25,12 @@ export const cookies = [
 		session: false,
 		storeId: '1',
 		value:
-			'g.a000mwingBbp5l4wKcBEZgStwd9DRHiQddNvnxl5vsTa5_b2ZTjcOTjOXY9krng6ZCREZ6_KCwACgYKAdESARUSFQHGX2MiIx1Hlzn6qzoHSGfxkUfjhBoVAUF8yKoWMDzkkCYzQ9ClBvL8XIkY0076',
+			'g.a000pQiE9otm09KQiDCvJP38Cy72B4s0UnAKb0VIVCJLL94MlaxZ5Yesmeh3PuQ7dkQvXnGrnwACgYKAU8SARASFQHGX2MihQDh7gHRVYZguwNeT0cC3BoVAUF8yKpzeKLeHS3-gJwhjnf0lIvS0076',
 		id: 2
 	},
 	{
 		domain: '.youtube.com',
-		expirationDate: 1755110912.832037,
+		expirationDate: 1760982081,
 		hostOnly: false,
 		httpOnly: true,
 		name: '__Secure-1PSIDCC',
@@ -39,12 +39,12 @@ export const cookies = [
 		secure: true,
 		session: false,
 		storeId: '1',
-		value: 'AKEyXzUuhLToWmn2n8hnzFQOXhMxV178LOayZ-WKAGhMdjkYJ33G0l41yKl5BbswtCteyMxG',
+		value: 'AKEyXzWOWZoX9nKzSQGeiLWEG5cZPSnYIbfygYoUKVCvhI16tDDNBWkW9aDFYSVJB8_mApeS',
 		id: 3
 	},
 	{
 		domain: '.youtube.com',
-		expirationDate: 1755110639.859979,
+		expirationDate: 1760982073,
 		hostOnly: false,
 		httpOnly: true,
 		name: '__Secure-1PSIDTS',
@@ -53,12 +53,12 @@ export const cookies = [
 		secure: true,
 		session: false,
 		storeId: '1',
-		value: 'sidts-CjEBUFGoh_zsj0RQFocDaV5ehsnqyBPNGWVUdNxxHstiNplmxcyh8F-Mn6CPvNlU07taEAA',
+		value: 'sidts-CjEBQlrA-AMmS9ir55F7D_EWEffQkq6yynvrKBzPyCmJYlC5MGAZcflUTL4HvDgWju_8EAA',
 		id: 4
 	},
 	{
 		domain: '.youtube.com',
-		expirationDate: 1758134036.882325,
+		expirationDate: 1764006073,
 		hostOnly: false,
 		httpOnly: false,
 		name: '__Secure-3PAPISID',
@@ -67,12 +67,12 @@ export const cookies = [
 		secure: true,
 		session: false,
 		storeId: '1',
-		value: 'f_qI2g3VbwU13rl4/Ahy52_CdAJrrWkEMm',
+		value: 'nkbkgzeVbOFLlkqx/A3G-if1K3TPtwsuT7',
 		id: 5
 	},
 	{
 		domain: '.youtube.com',
-		expirationDate: 1758134036.882451,
+		expirationDate: 1764006073,
 		hostOnly: false,
 		httpOnly: true,
 		name: '__Secure-3PSID',
@@ -82,12 +82,12 @@ export const cookies = [
 		session: false,
 		storeId: '1',
 		value:
-			'g.a000mwingBbp5l4wKcBEZgStwd9DRHiQddNvnxl5vsTa5_b2ZTjcyv71bmPjwVnpFjDbZu8nxgACgYKAQYSARUSFQHGX2MiOX9xJofDBzA5cvEWmmfIqxoVAUF8yKo7vhxDKBDMsUptuZn2AnWE0076',
+			'g.a000pQiE9otm09KQiDCvJP38Cy72B4s0UnAKb0VIVCJLL94MlaxZugaRi_QP5OHMRH8YQBA4ZwACgYKAUQSARASFQHGX2Mi41fKoGsUf0IURdxXD7EBNhoVAUF8yKppGT9NWL9TiVH0wg2XmrPy0076',
 		id: 6
 	},
 	{
 		domain: '.youtube.com',
-		expirationDate: 1755110912.832066,
+		expirationDate: 1760982081,
 		hostOnly: false,
 		httpOnly: true,
 		name: '__Secure-3PSIDCC',
@@ -96,12 +96,12 @@ export const cookies = [
 		secure: true,
 		session: false,
 		storeId: '1',
-		value: 'AKEyXzVqOpeZDRAMBpaFr3BOhitqPa2zDiunm3KjYRyU6s8LZT-YMo-MkreQQS1PP2wyII45OQ',
+		value: 'AKEyXzXBmiiYVf9nuY8PsNfUwWldtcYGKK42iBJQA0FygVEiO3nARw9rLhB8Y20L95J1AILthg',
 		id: 7
 	},
 	{
 		domain: '.youtube.com',
-		expirationDate: 1755110639.860228,
+		expirationDate: 1760982073,
 		hostOnly: false,
 		httpOnly: true,
 		name: '__Secure-3PSIDTS',
@@ -110,12 +110,12 @@ export const cookies = [
 		secure: true,
 		session: false,
 		storeId: '1',
-		value: 'sidts-CjEBUFGoh_zsj0RQFocDaV5ehsnqyBPNGWVUdNxxHstiNplmxcyh8F-Mn6CPvNlU07taEAA',
+		value: 'sidts-CjEBQlrA-AMmS9ir55F7D_EWEffQkq6yynvrKBzPyCmJYlC5MGAZcflUTL4HvDgWju_8EAA',
 		id: 8
 	},
 	{
 		domain: '.youtube.com',
-		expirationDate: 1758134036.882243,
+		expirationDate: 1764006073,
 		hostOnly: false,
 		httpOnly: false,
 		name: 'APISID',
@@ -124,12 +124,12 @@ export const cookies = [
 		secure: false,
 		session: false,
 		storeId: '1',
-		value: 'G6zNN0wqaAGmNMWj/AfQCpOYGFUYYJCTnH',
+		value: 'y2tvynhh8juJQtsA/AbAVnFzgGXLhvpNnM',
 		id: 9
 	},
 	{
 		domain: '.youtube.com',
-		expirationDate: 1723575740.878733,
+		expirationDate: 1729447865,
 		hostOnly: false,
 		httpOnly: true,
 		name: 'GPS',
@@ -143,7 +143,7 @@ export const cookies = [
 	},
 	{
 		domain: '.youtube.com',
-		expirationDate: 1758134036.882084,
+		expirationDate: 1764006073,
 		hostOnly: false,
 		httpOnly: true,
 		name: 'HSID',
@@ -152,12 +152,12 @@ export const cookies = [
 		secure: false,
 		session: false,
 		storeId: '1',
-		value: 'A1fi723Tyw5l_meIT',
+		value: 'AdkAzFSaP1vD0CaAX',
 		id: 11
 	},
 	{
 		domain: '.youtube.com',
-		expirationDate: 1758134035.190629,
+		expirationDate: 1764006073,
 		hostOnly: false,
 		httpOnly: true,
 		name: 'LOGIN_INFO',
@@ -167,12 +167,12 @@ export const cookies = [
 		session: false,
 		storeId: '1',
 		value:
-			'AFmmF2swRgIhAOxKJyFl4eyyIwDUkXaseV8nVj3HkK9ptJojTVlQm2rtAiEAz2rK2UKlRRcUMdVkKo35iKGE11REe-JGboPmEYaTWBs:QUQ3MjNmemFpblkyM0I5Y3gzeG42LS1FWTlEZ1NmRXdPaUY2SFFzMnNnRm9QZlF1amVhTnVRTU12ZzQycmlJeFZXQS1qWlNuUGdNeWtINzNYdmZRQkU1RGdNOFJ0dW5qdl9zazFfckxNUEpiZkV5UklSMVR3LVl4bUMwMEk4N2YtT3h1eWdPU1ZhdVdmaEoyUVY3YUhrWXpPMnU5aWRMR21n',
+			'AFmmF2swRQIgLqzZyNvfyusBOMDwiBrZdq3sPVPbACpBqvmwm8NEX_UCIQDtOYvatGwS9QMpsR5DAnpi46NzEGq2ViWTsH2Kdq1fIw:QUQ3MjNmemZmV1JGcENYcmFBdWJqamw5LUpRdk9EMjJVcHloQ0tJcGlSU3RBbWpPLTRlbDNiMGFXNXhPQ3dNWGZGZmw2SEgzaDAzcTdlMDU0ZmJvYVd5Tk9jQXBlY2dpTWo5emJyRlJDVy12OTAtLTMyS21uTGtMN09Ea2p6Y2V3cjNmUnJXeW5vZUJzRFlfZjVPVWNCZlhqQ0lIdEtjOTln',
 		id: 12
 	},
 	{
 		domain: '.youtube.com',
-		expirationDate: 1758134041.360524,
+		expirationDate: 1764006076,
 		hostOnly: false,
 		httpOnly: false,
 		name: 'PREF',
@@ -186,7 +186,7 @@ export const cookies = [
 	},
 	{
 		domain: '.youtube.com',
-		expirationDate: 1758134036.882269,
+		expirationDate: 1764006073,
 		hostOnly: false,
 		httpOnly: false,
 		name: 'SAPISID',
@@ -195,12 +195,12 @@ export const cookies = [
 		secure: true,
 		session: false,
 		storeId: '1',
-		value: 'f_qI2g3VbwU13rl4/Ahy52_CdAJrrWkEMm',
+		value: 'nkbkgzeVbOFLlkqx/A3G-if1K3TPtwsuT7',
 		id: 14
 	},
 	{
 		domain: '.youtube.com',
-		expirationDate: 1758134036.88241,
+		expirationDate: 1764006073,
 		hostOnly: false,
 		httpOnly: false,
 		name: 'SID',
@@ -210,12 +210,12 @@ export const cookies = [
 		session: false,
 		storeId: '1',
 		value:
-			'g.a000mwingBbp5l4wKcBEZgStwd9DRHiQddNvnxl5vsTa5_b2ZTjcaMr47nRlHXLoxxwworIuzQACgYKAe8SARUSFQHGX2MiRQVilCRSk3qQhHydUhqETBoVAUF8yKqRyG3BpXC6z4e323pX-FRb0076',
+			'g.a000pQiE9otm09KQiDCvJP38Cy72B4s0UnAKb0VIVCJLL94MlaxZd-KTAhSS6f6uJh4KYSSzngACgYKAcgSARASFQHGX2MiM2A0aP57MdUkJaABvEP9thoVAUF8yKoUsMWaijbIiHYWWskwBmlj0076',
 		id: 15
 	},
 	{
 		domain: '.youtube.com',
-		expirationDate: 1755110912.831927,
+		expirationDate: 1760982081,
 		hostOnly: false,
 		httpOnly: false,
 		name: 'SIDCC',
@@ -224,12 +224,12 @@ export const cookies = [
 		secure: false,
 		session: false,
 		storeId: '1',
-		value: 'AKEyXzXC-_zPcRqh3DmA1utqRpI_5fnDTq1_rkmJVMKZ5Y9fglBpElOQ-q1oyBMQhgL_Njq6Vw',
+		value: 'AKEyXzUN3jTtaY--rj-0oNKza0KnoQJssF-0FdpylR1sVajx52dMeb7P0NST2mqJbhSySZhU8Q',
 		id: 16
 	},
 	{
 		domain: '.youtube.com',
-		expirationDate: 1758134036.882213,
+		expirationDate: 1764006073,
 		hostOnly: false,
 		httpOnly: true,
 		name: 'SSID',
@@ -238,12 +238,12 @@ export const cookies = [
 		secure: true,
 		session: false,
 		storeId: '1',
-		value: 'A5CshbtDItYolBGES',
+		value: 'Ag1kLQkGrejUZXyHu',
 		id: 17
 	},
 	{
 		domain: '.youtube.com',
-		expirationDate: 1739125940.878907,
+		expirationDate: 1744998065,
 		hostOnly: false,
 		httpOnly: true,
 		name: 'VISITOR_INFO1_LIVE',
@@ -252,12 +252,12 @@ export const cookies = [
 		secure: true,
 		session: false,
 		storeId: '1',
-		value: 'sS23AByHXvY',
+		value: 'TgZWiLcva4E',
 		id: 18
 	},
 	{
 		domain: '.youtube.com',
-		expirationDate: 1739125940.878955,
+		expirationDate: 1744998065,
 		hostOnly: false,
 		httpOnly: true,
 		name: 'VISITOR_PRIVACY_METADATA',
@@ -266,7 +266,7 @@ export const cookies = [
 		secure: true,
 		session: false,
 		storeId: '1',
-		value: 'CgJJRBIEGgAgMA%3D%3D',
+		value: 'CgJJRBIEGgAgHQ%3D%3D',
 		id: 19
 	},
 	{
@@ -279,7 +279,7 @@ export const cookies = [
 		secure: true,
 		session: true,
 		storeId: '1',
-		value: 'VVuV1xm2uhc',
+		value: '7PTu9hluH44',
 		id: 20
 	}
 ];
