@@ -28,7 +28,7 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"@distube/ytdl-core": "^4.14.4",
+		"@distube/ytdl-core": "https://github.com/XM4ZE/ytdl-core",
 		"@vercel/analytics": "^1.0.1",
 		"csv-parse": "^5.5.6",
 		"gitrows": "https://github.com/Mantan21/gitrows",
