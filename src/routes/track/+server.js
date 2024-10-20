@@ -20,6 +20,7 @@ export async function POST({ request, fetch }) {
 
 		return json({ message: 'ok', ...videoResult }, { status: 200 });
 	} catch (e) {
+		console.log(e);
 		return json({ message: 'Server Error' }, { status: 500, statusText: 'server error' });
 	}
 }
@@ -52,8 +53,15 @@ export async function POST({ request, fetch }) {
 // };
 
 const proccessYt = async (vID, type) => {
-	const agent = ytdl.createProxyAgent({ uri: myProxy }, cookies);
+	const agentOptions = {
+		// pipelining: 5,
+		// maxRedirections: 0,
+		// localAddress: '127.0.0.1'
+	};
+	// const agent = ytdl.createProxyAgent({ uri: myProxy }, cookies);
+	const agent = ytdl.createAgent(cookies, agentOptions);
 	const ytInfo = await ytdl.getInfo(vID, { agent });
+	console.log(vID, type, ytInfo);
 	const ytfn = type === 'video' ? vidLib : audioLib;
 	const result = await ytfn(ytInfo);
 	return result;
