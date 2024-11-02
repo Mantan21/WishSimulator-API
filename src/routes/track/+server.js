@@ -1,18 +1,25 @@
-import { json } from '@sveltejs/kit';
+import { json, text } from '@sveltejs/kit';
+import ytdl from '@distube/ytdl-core';
+import { cookies } from './cookies';
+import { myProxy, proxyScrape } from './proxy';
 
 /** @type {import('./$types').RequestHandler} */
 export async function GET() {
-	return json({ message: 'nothing to show' }, { status: 400 });
+	const proxies = await proxyScrape();
+	const textList = proxies.map((p) => p.replace('http://', '')).join('\n');
+	return text(textList);
+	// return json({ message: 'nothing to show'}, { status: 400 });
 }
 
 /** @type {import('./$types').RequestHandler} */
-export async function POST({ request }) {
+export async function POST({ request, fetch }) {
 	try {
 		const { videoID, type = 'audio' } = await request.json();
 		const vID = videoID?.replace(/[^A-Za-z0-9_\\-]/g, '');
 		if (!vID) return json({ message: 'please input video ID' }, { status: 400 });
 
-		const videoResult = await y2meta(vID, type);
+		// const videoResult = await mp3Youtube(vID, fetch);
+		const videoResult = await proccessYt(vID, type);
 
 		return json({ message: 'ok', ...videoResult }, { status: 200 });
 	} catch (e) {
@@ -21,32 +28,60 @@ export async function POST({ request }) {
 	}
 }
 
-const y2meta = async (vid, type) => {
-	const isVideo = type !== 'audio';
-	const quality = isVideo ? '360' : '320';
-	const format = isVideo ? 'mp4' : 'mp3';
+const proccessYt = async (vID, type) => {
+	// const agent = ytdl.createProxyAgent({ uri: myProxy }, cookies);
+	// const result = ytdl(`https://www.youtube.com/watch?v=${vID}`);
+	const agent = ytdl.createAgent(cookies);
+	const ytInfo = await ytdl.getInfo(vID, { agent });
+	const ytfn = type === 'video' ? vidLib : audioLib;
+	const result = await ytfn(ytInfo);
+	return result;
+};
 
-	const response = await fetch('https://6fee.mmnm.store/oajax.php', {
-		headers: {
-			'content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
-			Origin: 'https://6fee.mmnm.store'
-		},
-		body: `videoid=${vid}&downtype=${format}&vquality=${quality}`,
-		method: 'POST'
-	});
+const audioLib = async (ytInfo = {}) => {
+	const formats = { mime: '' };
 
-	const { url, filename } = await response.json();
-	const images = [
-		{
-			width: 180,
-			height: 320,
-			url: `https://img.youtube.com/vi/${vid}/mqdefault.jpg`
-		},
-		{
-			width: 1280,
-			height: 720,
-			url: `https://img.youtube.com/vi/${vid}/maxresdefault.jpg`
-		}
-	];
-	return { download: url, images, title: filename };
+	ytInfo.formats
+		.filter((file) => file.mimeType?.startsWith('audio'))
+		.forEach((file) => {
+			const mime = file.mimeType?.split(';')[0];
+			// @ts-ignore
+			formats[mime] = file.url;
+		});
+
+	// @ts-ignore
+	const images = ytInfo.player_response.videoDetails.thumbnail.thumbnails;
+	const result = {
+		download: ytdl.chooseFormat(ytInfo.formats, { filter: 'audioonly' }).url,
+		formats,
+		author: ytInfo.videoDetails.author.name,
+		title: ytInfo.videoDetails.title,
+		description: ytInfo.videoDetails.description,
+		images
+	};
+	return result;
+};
+
+const vidLib = async (ytInfo = {}) => {
+	const formats = { mime: '' };
+	ytInfo.formats
+		.filter(({ mimeType, hasAudio, qualityLabel }) => {
+			return mimeType?.startsWith('video') && !hasAudio && qualityLabel === '360p';
+		})
+		.forEach(({ mimeType, url }) => {
+			const mime = mimeType?.split(';')[0];
+			// @ts-ignore
+			formats[mime] = url;
+		});
+
+	// @ts-ignore
+	const images = ytInfo.player_response.videoDetails.thumbnail.thumbnails;
+	const result = {
+		formats,
+		author: ytInfo.videoDetails.author.name,
+		title: ytInfo.videoDetails.title,
+		description: ytInfo.videoDetails.description,
+		images
+	};
+	return result;
 };

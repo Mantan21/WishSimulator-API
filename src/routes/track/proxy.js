@@ -1,11 +1,5 @@
 const list = [
-	'178.254.31.232:3128',
-	'152.26.229.66:9443',
-	'152.26.229.86:9443',
-	'152.26.229.88:9443',
-	'152.26.231.42:9443',
-	'152.26.231.77:9443',
-	'152.26.231.86:9443'
+	// '193.38.244.17:3128',
 ];
 
 const index = Math.floor(Math.random() * list.length);
@@ -17,4 +11,15 @@ export const getProxy = async () => {
 	const list = proxies.split('\n');
 	const index = Math.floor(Math.random() * list.length);
 	return 'http://' + list[index];
+};
+
+export const proxyScrape = async () => {
+	const data = await fetch(
+		'https://api.proxyscrape.com/v4/free-proxy-list/get?request=display_proxies&protocol=http&proxy_format=protocolipport&format=json&timeout=20000'
+	);
+	const { proxies: list } = await data.json();
+	const filtered = list.filter(({ alive }) => alive);
+	const result = filtered.map(({ proxy }) => proxy);
+	// return result
+	return [''];
 };
