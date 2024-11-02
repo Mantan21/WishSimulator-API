@@ -1,5 +1,6 @@
 import { getThumbnail } from './manual-thumbnails';
 
+// https://submagic.co/
 export const submagic = async (vid, choosenType, fetch) => {
 	const myHeaders = new Headers();
 	myHeaders.append('Content-Type', 'application/json');
@@ -15,7 +16,7 @@ export const submagic = async (vid, choosenType, fetch) => {
 	const { formats, title } = await data.json();
 	const proccessed = getDownloadLink(formats, choosenType);
 
-	return { title, images, ...proccessed };
+	return { title, images, provider: 'submagic', ...proccessed };
 };
 
 const getURL = (arr = [], t) => {

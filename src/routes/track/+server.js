@@ -1,5 +1,6 @@
 import { json } from '@sveltejs/kit';
 import { submagic } from './providers/submagic';
+import { freemake } from './providers/freemake';
 
 /** @type {import('./$types').RequestHandler} */
 export async function GET() {
@@ -17,13 +18,13 @@ export async function POST({ request, fetch }) {
 		return json({ message: 'ok', ...result }, { status: 200 });
 	} catch (e) {
 		console.log(e);
-		return json({ message: 'Server Error' }, { status: 500, statusText: 'server error' });
+		return json({ message: 'Server Error' }, { status: 500, statusText: 'internal_server_error' });
 	}
 }
 
 const proccessYT = (vid, type, fetch) => {
-	const videoProvider = [submagic];
-	const audioProvider = [submagic];
+	const videoProvider = [submagic, freemake];
+	const audioProvider = [submagic, freemake];
 	const provider = type !== 'audio' ? videoProvider : audioProvider;
 	const ytFn = provider[Math.floor(Math.random() * provider.length)];
 	return ytFn(vid, type, fetch);
