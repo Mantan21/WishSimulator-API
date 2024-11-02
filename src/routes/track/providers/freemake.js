@@ -1,9 +1,11 @@
 import { getThumbnail } from './manual-thumbnails';
 
-// https://submagic.co/
+// https://www.freemake.com
 export const freemake = async (vid, choosenType, fetch) => {
 	const myHeaders = new Headers();
-	myHeaders.append('Origin', 'https://www.freemake.com/');
+	myHeaders.append('Origin', 'https://www.freemake.com');
+	myHeaders.append('Referer', 'https://www.freemake.com/free_video_downloader_skillful');
+	myHeaders.append('x-analytics-header', 'UA-18256617-1');
 	const data = await fetch('https://downloader.freemake.com/api/videoinfo/' + vid, {
 		headers: myHeaders
 	});

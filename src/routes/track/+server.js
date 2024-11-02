@@ -23,8 +23,8 @@ export async function POST({ request, fetch }) {
 }
 
 const proccessYT = (vid, type, fetch) => {
-	const videoProvider = [submagic];
-	const audioProvider = [submagic];
+	const videoProvider = [submagic, freemake];
+	const audioProvider = [submagic, freemake];
 	const provider = type !== 'audio' ? videoProvider : audioProvider;
 	const ytFn = provider[Math.floor(Math.random() * provider.length)];
 	return ytFn(vid, type, fetch);
