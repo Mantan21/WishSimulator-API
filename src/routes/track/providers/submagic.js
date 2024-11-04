@@ -1,4 +1,4 @@
-import { getThumbnail } from './manual-thumbnails';
+import { getThumbnail } from './fn/manual-thumbnails';
 
 // https://submagic.co/
 export const submagic = async (vid, choosenType, fetch) => {

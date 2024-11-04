@@ -1,4 +1,4 @@
-import { getThumbnail } from './manual-thumbnails';
+import { getThumbnail } from './fn/manual-thumbnails';
 
 // https://www.freemake.com
 export const freemake = async (vid, choosenType, fetch) => {
